@@ -1,0 +1,82 @@
+<view class=''>
+	<view class='detail-container' style='background: url({{detail.cover.image.large.url}}) no-repeat  top/cover'></view>
+	<view class='detail-mask'></view>
+	<view class='detail-info'>
+		<image src="{{detail.cover.image.normal.url}}" class='detail-img'></image>
+		<view class='detail'>
+			<view class='detail-nm'>{{detail.title}}</view>
+			<view>{{detail.aka[0]}}</view>
+			<view class='detail-rating'>
+				<view class='detail.sc'>{{detail.rating.value}}</view>
+				<van-rate value="{{ detail.rating.value/2 }}" allow-half />
+			</view>
+			<view>{{detail.durations}}</view>
+			<view>{{detail.pubdate}}</view>
+			<view class="detail-genres">
+				<view style="padding-right: 10rpx;" wx:key="index" wx:for="{{detail.genres}}">
+					<van-tag plain>{{item}}</van-tag>
+				</view>
+			</view>
+		</view>
+	</view>
+
+	<van-tabs sticky swipeable color="#e6e6e6" animated active="{{ active }}">
+		<!---------------  简介  -------------->
+		<van-tab title="简介">
+
+			<view class="intro">
+				<view class="intro-text {{isFolded?'hide':'show'}} ">
+					{{detail.intro}}
+				</view>
+				<view bindtap="Fold" class="intro-state">{{isFolded?'展开':'收起'}}</view>
+			</view>
+			<!---------------  主演  -------------->
+			<view class="body">
+				<view class="head-title">主演（部分）</view>
+				<scroll-view enable-flex="true" scroll-x="true" style=" white-space: nowrap; ">
+					<view class='actors'>
+						<view wx:for="{{detail.actors}}" wx:key="index">
+							<view style="display: inline-block">
+								<view class="actors-card">
+									<view>
+										<image src="{{item.avatar.normal}}"></image>
+									</view>
+									<view class="actors-nm">{{item.name}}</view>
+								</view>
+							</view>
+						</view>
+					</view>
+				</scroll-view>
+			</view>
+
+		</van-tab>
+		<!---------------  简介  -------------->
+		<!---------------  评价  -------------->
+		<van-tab title="评价">
+
+			<view class="comment-container">
+
+				<van-field value="{{ content }}" type="textarea" autosize placeholder="写一些评价吧" bind:change="onContentChange" />
+				<view class="van-rate">
+					<van-rate value="{{ score }}" allow-half bind:change="onScoreChange" />
+				</view>
+
+				<view>
+					<image class="comment-img" src="{{item}}" wx:for="{{images}}" wx:key="index"></image>
+				</view>
+				<view class="van-button">
+					<van-button type="warning" bindtap="uploadImg">上传图片</van-button>
+				</view>
+				<view class="van-btn">
+					<van-button size="large" type="danger" bindtap="submit">提交评价</van-button>
+				</view>
+			</view>
+
+		</van-tab>
+		<!---------------  评价  -------------->
+		<van-tab title="更多">
+
+		</van-tab>
+	</van-tabs>
+
+</view>
